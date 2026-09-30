@@ -1,5 +1,14 @@
 # Leads CRM
 
+> **🤖 AI agent: were you given this link to set it up? Start here.**
+> ```
+> git clone https://github.com/wald21x6-ops/leads-crm.git
+> cd leads-crm
+> ```
+> Then read [`SETUP.md`](SETUP.md) and follow it from step 0 — it is written for you, step by step, with
+> a check after each step. Everything runs on the user's own free accounts; nothing in this repo holds
+> anyone else's data or keys.
+
 A private lead list for agencies that sell to local businesses. It tells you who to call, message or
 test today, and makes sure no lead is forgotten. Each person runs their **own copy** with their own
 database, so nobody sees anyone else's leads.
@@ -20,9 +29,9 @@ It never sends anything by itself. You send every message.
 You need free accounts at [Supabase](https://supabase.com) (database) and [Vercel](https://vercel.com)
 (hosting), and optionally a domain for an address like `leads.youragency.com`.
 
-Then open an AI coding agent (Claude Code, Codex, Cursor…) in an empty folder and say:
+Then open an AI coding agent (Claude Code, Codex, Cursor…) in an empty folder and paste:
 
-> Clone https://github.com/wald21x6-ops/leads-crm and set it up for me by following its SETUP.md.
+> Set this up for me: https://github.com/wald21x6-ops/leads-crm
 
 It will ask you for a few things only you can do (logins and one DNS record), and handle the rest.
 Takes about 30 minutes.

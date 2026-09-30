@@ -31,6 +31,10 @@ Keep every key out of git: only in the ignored files named below. Never print a 
 `$SUPABASE_ACCESS_TOKEN` must be set in the environment for every `npx supabase` command
 (bash: `export SUPABASE_ACCESS_TOKEN=...`; PowerShell: `$env:SUPABASE_ACCESS_TOKEN="..."`).
 
+**Check:** from the repo root, `node scripts/doctor.mjs` ends with "Ready" (exit 0). It is read-only.
+It checks Node, git, Python, the Supabase token, a **free project slot** and the Vercel login, and says
+exactly what to fix. Tell the human any FIX line in plain words, wait, and re-run until it passes.
+
 ## 1. Install
 
 ```
