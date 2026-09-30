@@ -4,7 +4,7 @@ This repo is a self-hosted leads CRM (`app/`, based on Atomic CRM) plus a local 
 (`robot/`). Each user runs their own private copy with their own database.
 
 - **Setting it up for someone:** follow `SETUP.md` step by step. Do not skip any of its checks —
-  especially closing public sign-up in step 6.
+  especially closing public sign-up in step 8.
 - **Researching leads:** use the `lead-robot` skill (`.claude/skills/lead-robot/SKILL.md`).
 - **Data shape** shared by the app and the robot: `CONTRACT.md`.
 - **Changing the app:** `app/AGENTS.md` and `app/CLAUDE.md` describe the codebase.

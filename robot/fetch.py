@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -28,6 +29,7 @@ def env() -> dict:
         for line in ENV.read_text(encoding="utf-8").splitlines():
             if "=" in line and not line.lstrip().startswith("#"):
                 k, v = line.split("=", 1)
+                v = re.sub(r"\s+#.*$", "", v)  # a comment after the value is not part of it
                 vals[k.strip()] = v.strip().strip('"').strip("'")
     return {**vals, **{k: v for k, v in os.environ.items() if k in vals or k.startswith(("CRM_", "FIRECRAWL_"))}}
 
