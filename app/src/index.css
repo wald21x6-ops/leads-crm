@@ -1,0 +1,277 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource-variable/urbanist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Urbanist Variable", ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-lime: var(--lime);
+  --color-lime-foreground: var(--lime-foreground);
+  --color-teal: var(--teal);
+  --color-teal-foreground: var(--teal-foreground);
+  --color-teal-text: var(--teal-text);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-on-lime: var(--danger-on-lime);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+}
+
+:root {
+  /* Leads: calm canvas, one lit lead. Lime = next step / active, teal = progress,
+     black = the one main action. Text tokens hold >= 4.5:1 on card and canvas. */
+  --radius: 1.25rem;
+  --background: #f3f3f0;
+  --foreground: #151514;
+  --card: #ffffff;
+  --card-foreground: #151514;
+  --popover: #ffffff;
+  --popover-foreground: #151514;
+  --primary: #111111;
+  --primary-foreground: #ffffff;
+  --secondary: #ebebe6;
+  --secondary-foreground: #151514;
+  --muted: #efefea;
+  --muted-foreground: #5b5b57;
+  --accent: #ebebe5;
+  --accent-foreground: #151514;
+  --destructive: #b8322c;
+  --border: #deded8;
+  --input: #d4d4cd;
+  --ring: #2a9d8f;
+  --lime: #e6fb88;
+  --lime-foreground: #151514;
+  --teal: #2a9d8f;
+  --teal-foreground: #ffffff;
+  --teal-text: #1d6f66;
+  --danger: #b8322c;
+  --danger-soft: #fbe8e5;
+  /* Lime surfaces stay light in dark mode, so text on them keeps light-mode colours. */
+  --danger-on-lime: #9e2a25;
+  --warn: #875800;
+  --warn-soft: #fdf1d2;
+  --peach: #fbe3da;
+  --chart-1: #2a9d8f;
+  --chart-2: #b9d94a;
+  --chart-3: #e8a07e;
+  --chart-4: #5b5b57;
+  --chart-5: #151514;
+  --sidebar: #ebebe6;
+  --sidebar-foreground: #151514;
+  --sidebar-primary: #111111;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e6fb88;
+  --sidebar-accent-foreground: #151514;
+  --sidebar-border: #deded8;
+  --sidebar-ring: #2a9d8f;
+  --avatar-0: oklch(0.9 0.1 125);
+  --avatar-1: oklch(0.88 0.06 40);
+  --avatar-2: oklch(0.85 0.07 180);
+  --avatar-3: oklch(0.9 0.08 85);
+  --avatar-4: oklch(0.87 0.05 300);
+  --avatar-5: oklch(0.86 0.08 150);
+  --avatar-6: oklch(0.87 0.06 210);
+  --avatar-7: oklch(0.88 0.07 15);
+  --avatar-8: oklch(0.92 0.07 100);
+  --avatar-9: oklch(0.86 0.05 260);
+}
+
+.dark {
+  --background: #0f0f0e;
+  --foreground: #f2f2ee;
+  --card: #1a1a18;
+  --card-foreground: #f2f2ee;
+  --popover: #1a1a18;
+  --popover-foreground: #f2f2ee;
+  --primary: #f2f2ee;
+  --primary-foreground: #111111;
+  --secondary: #222220;
+  --secondary-foreground: #f2f2ee;
+  --muted: #242422;
+  --muted-foreground: #a6a69f;
+  --accent: #2a2a27;
+  --accent-foreground: #f2f2ee;
+  --destructive: #f07a72;
+  --border: rgb(255 255 255 / 12%);
+  --input: rgb(255 255 255 / 16%);
+  --ring: #3db5a6;
+  --lime: #d3e77c;
+  --lime-foreground: #151514;
+  --teal: #3db5a6;
+  --teal-foreground: #0f0f0e;
+  --teal-text: #6fd3c5;
+  --danger: #f07a72;
+  --danger-soft: rgb(240 122 114 / 14%);
+  --danger-on-lime: #9e2a25;
+  --warn: #e8b04a;
+  --warn-soft: rgb(232 176 74 / 14%);
+  --peach: rgb(251 227 218 / 10%);
+  --chart-1: #3db5a6;
+  --chart-2: #c9e85a;
+  --chart-3: #e8a07e;
+  --chart-4: #a6a69f;
+  --chart-5: #f2f2ee;
+  --sidebar: #1a1a18;
+  --sidebar-foreground: #f2f2ee;
+  --sidebar-primary: #e6fb88;
+  --sidebar-primary-foreground: #151514;
+  --sidebar-accent: #2a2a27;
+  --sidebar-accent-foreground: #f2f2ee;
+  --sidebar-border: rgb(255 255 255 / 10%);
+  --sidebar-ring: #3db5a6;
+  --avatar-0: oklch(0.38 0.1 125);
+  --avatar-1: oklch(0.38 0.08 40);
+  --avatar-2: oklch(0.35 0.08 180);
+  --avatar-3: oklch(0.4 0.09 85);
+  --avatar-4: oklch(0.36 0.07 300);
+  --avatar-5: oklch(0.35 0.08 150);
+  --avatar-6: oklch(0.37 0.07 210);
+  --avatar-7: oklch(0.38 0.09 15);
+  --avatar-8: oklch(0.4 0.08 100);
+  --avatar-9: oklch(0.36 0.07 260);
+}
+
+/* The wash marks the lead being worked on. Use it on that one surface only. */
+.lead-wash {
+  background:
+    radial-gradient(120% 95% at 0% 0%, color-mix(in oklab, var(--lime) 85%, transparent) 0%, transparent 58%),
+    radial-gradient(110% 100% at 100% 100%, var(--peach) 0%, transparent 62%),
+    var(--card);
+}
+.dark .lead-wash {
+  background:
+    radial-gradient(120% 95% at 0% 0%, color-mix(in oklab, var(--lime) 12%, transparent) 0%, transparent 58%),
+    radial-gradient(110% 100% at 100% 100%, var(--peach) 0%, transparent 62%),
+    var(--card);
+}
+
+::selection {
+  background: var(--lime);
+  color: var(--lime-foreground);
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+input {
+  cursor: text;
+}
+
+/* Phone app shell: room for the notch / home bar when installed full screen. */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --mobile-nav-h: calc(3.5rem + var(--safe-bottom));
+}
+
+/* Feel like an app, not a web page: no grey tap flash, no double-tap zoom delay,
+   no text-select or callout when holding a button or nav item. */
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+button,
+nav a,
+[role="tab"] {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Prevent mobile zoom on input focus by ensuring 16px minimum font size */
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 17px;
+  }
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+a[aria-disabled="true"],
+button[aria-disabled="true"],
+button:disabled,
+input[aria-disabled="true"],
+input:disabled {
+  cursor: not-allowed;
+}
+
+input[type="date"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="time"] {
+  position: relative;
+}
+
+.dark ::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  position: absolute;
+  right: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+body {
+  font-family: "Urbanist Variable", ui-sans-serif, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-weight: 460;
+}
+
+/* The mobile pull-to-refresh (see layout/PullToRefresh.tsx) owns the overscroll
+   gesture: without this, Chrome for Android runs its own pull-to-refresh — a full
+   page reload — on top of ours, and iOS rubber-bands the page under the indicator.
+   Suppressing both here is what lets our touch listeners stay passive.
+   767px is the mobile breakpoint of useIsMobile(). */
+@media (max-width: 767px) {
+  html {
+    overscroll-behavior-y: none;
+  }
+}

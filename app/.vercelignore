@@ -1,0 +1,6 @@
+node_modules
+dist
+.env*
+.vitest-attachments
+test-results
+playwright-report

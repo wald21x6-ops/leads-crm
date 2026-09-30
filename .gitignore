@@ -1,0 +1,8 @@
+# Keys and local state never go to git
+.env
+.env.*
+!.env.example
+robot/cache/
+__pycache__/
+*.pyc
+node_modules/
