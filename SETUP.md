@@ -11,13 +11,21 @@ Works on Windows, macOS and Linux (Node 22+, Python 3.10+, git). No Docker neede
 
 ## 0. What the human must do (ask for all of it up front, in one message)
 
-Only a person can do these. Ask for them together, then wait:
+First create `.env.setup.local` in the repo root (git-ignored) containing exactly:
+```
+# Paste your Supabase access token after the = sign, save, and tell your agent "done".
+SUPABASE_ACCESS_TOKEN=
+```
+Then ask for everything below in one message, and start step 1 (install) while you wait — it needs
+nothing from them:
 
-1. **Supabase** (the database): an account at https://supabase.com and an access token from
-   https://supabase.com/dashboard/account/tokens. The free plan allows **2 active projects per
-   organization** — if they already have 2, they must pause one, delete one, or use a paid plan before
-   step 2. Also ask which email they will log in to the CRM with — it should be their Supabase
-   account email (see step 8).
+1. **Supabase** (the database): an account at https://supabase.com, then a token from
+   https://supabase.com/dashboard/account/tokens pasted into `.env.setup.local` (give them the full path).
+   If they paste it in chat instead, write it into that file yourself and don't repeat it. The free plan
+   allows **2 active projects in total**; if they already use both, the check below lists them and they
+   must pause or delete one, or upgrade — never do that for them.
+   Also ask for the **email they will log in to the CRM with** — it must be their Supabase account
+   email, because Supabase's built-in email only sends confirmation emails to that address.
 2. **Vercel** (the hosting, free plan is fine): an account at https://vercel.com. If they belong to more
    than one Vercel team, ask which one to use.
 3. **Their address**: the subdomain they want (e.g. `leads.theiragency.com`) and where their domain's
@@ -28,12 +36,15 @@ Only a person can do these. Ask for them together, then wait:
 
 Keep every key out of git: only in the ignored files named below. Never print a key in full.
 
-`$SUPABASE_ACCESS_TOKEN` must be set in the environment for every `npx supabase` command
-(bash: `export SUPABASE_ACCESS_TOKEN=...`; PowerShell: `$env:SUPABASE_ACCESS_TOKEN="..."`).
+Every `npx supabase` command needs the token in the environment. Load `.env.setup.local` into the
+shell you run each command in (from `app/`):
+- bash: `set -a; . ../.env.setup.local; set +a`
+- PowerShell: `Get-Content ..\.env.setup.local | Where-Object { $_ -match '^\w+=' } | ForEach-Object { $k, $v = $_ -split '=', 2; Set-Item "env:$k" $v }`
 
-**Check:** from the repo root, `node scripts/doctor.mjs` ends with "Ready" (exit 0). It is read-only.
-It checks Node, git, Python, the Supabase token, a **free project slot** and the Vercel login, and says
-exactly what to fix. Tell the human any FIX line in plain words, wait, and re-run until it passes.
+**Check (after they answer):** from the repo root, `node scripts/doctor.mjs` ends with "Ready" (exit 0).
+It is read-only. It checks Node, git, Python, the Supabase token, a **free project slot** and the Vercel
+login, and says exactly what to fix. Tell the human any FIX line in plain words, wait, and re-run until
+it passes.
 
 ## 1. Install
 
@@ -41,7 +52,9 @@ exactly what to fix. Tell the human any FIX line in plain words, wait, and re-ru
 cd app
 npm ci
 ```
-(If `npm ci` fails on the `prepare` step, set `HUSKY=0` and re-run.)
+(If `npm ci` fails on the `prepare` step, set `HUSKY=0` and re-run.) Two messages are expected and
+harmless — leave them alone: `.git can't be found` from husky, and an `npm audit` vulnerability count
+(do **not** run `npm audit fix`; it rewrites the tested dependency versions).
 
 **Check:** `npm run typecheck` exits 0.
 
@@ -51,8 +64,8 @@ npm ci
 npx supabase orgs list                      # pick their organization id
 npx supabase projects create "Leads CRM" --org-id <ORG_ID> --db-password "<GENERATED_PASSWORD>" --region <REGION>
 ```
-Generate a strong database password yourself (letters and digits, 20+ chars) and save it for the
-human in `app/.env.setup.local` (git-ignored) as `DB_PASSWORD=...`. Pick the region closest to the
+Generate a strong database password yourself (letters and digits, 20+ chars) and add it to
+`.env.setup.local` as `DB_PASSWORD=...` so the human keeps it. Pick the region closest to the
 user (`npx supabase projects create --help` lists them, e.g. `ap-south-1`, `us-east-1`, `eu-central-1`).
 Note the project ref (the 20-letter id) — below it is `<REF>`. A "2 project limit" error means step 0.1
 was not done.
@@ -104,7 +117,9 @@ bash `NODE_ENV=CI npm run build`; PowerShell `$env:NODE_ENV="CI"; npm run build`
 ## 6. Put it online (in `app/`)
 
 Use the Vercel team the human chose (`npx vercel teams list`); add `--scope <TEAM>` to every command
-below if they have more than one.
+below if they have more than one. The project name must be **new**: `npx vercel project ls` — if
+`leads-crm` is already listed, use `leads-crm-2` (or similar) here and in step 7, otherwise the deploy
+would replace that existing site.
 ```
 npx vercel login                     # only if `npx vercel whoami` fails; the human finishes it in the browser
 npx vercel link --yes --project leads-crm
@@ -179,14 +194,14 @@ On Windows set `PYTHONIOENCODING=utf-8` before running the robot.
 **Check:** `python robot/research.py lines` prints `0 lead(s) need a first line`.
 
 From now on the human uploads a list in the app ("Upload list"), then asks you to "research the new
-leads" — the `lead-robot` skill in `.claude/skills/lead-robot/SKILL.md` explains how you run it.
+leads" — the `leads-crm-robot` skill in `.claude/skills/leads-crm-robot/SKILL.md` explains how you run it.
 
 ## 10. Hand over
 
 Tell the human, in plain words:
 - the address, and that they are the admin;
 - that sign-up is closed and how to add teammates (step 8);
-- where their keys are (`app/.env.setup.local`, `app/.env.production.local`, `robot/.env`) and that
+- where their keys are (`.env.setup.local`, `app/.env.production.local`, `robot/.env`) and that
   these files must never be shared or committed;
 - how to add leads (Upload list: CSV with `name`, `city` required; `website`, `phone`, `state`,
   `business_type`, `source` optional) and that you can research them on request.

@@ -1,5 +1,5 @@
 ---
-name: lead-robot
+name: leads-crm-robot
 description: Research new leads waiting in this CRM and write their first lines. Trigger - "research the new list", "research the new leads", "run the robot", "the list I uploaded", "fill in the new leads", "find phones for the leads". Never sends anything to a business.
 ---
 
@@ -11,7 +11,7 @@ Code: `robot/research.py`. Runs on this computer against the user's own database
 `robot/.env`, git-ignored — never print it). Nothing is deployed and nothing is sent.
 
 Run everything from the repo root, with `PYTHONIOENCODING=utf-8` on Windows. Python 3.10+, no packages.
-If `robot/.env` is missing, do step 9 of `SETUP.md` first.
+If `robot/.env` is missing, do step 9 of `SETUP.md` first. This skill only ever touches the database named in this repo's `robot/.env`.
 
 ## 1. Credit check first
 Searches use Firecrawl credits (1 per search; a lead costs about 4–6; cached searches are free).
