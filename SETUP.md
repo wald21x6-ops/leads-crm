@@ -53,7 +53,7 @@ cd app
 npm ci
 ```
 (If `npm ci` fails on the `prepare` step, set `HUSKY=0` and re-run.) Two messages are expected and
-harmless — leave them alone: `.git can't be found` from husky, and an `npm audit` vulnerability count
+harmless — leave them alone: `.git can't be found` from husky (because `app/` is not the git root), and an `npm audit` vulnerability count
 (do **not** run `npm audit fix`; it rewrites the tested dependency versions).
 
 **Check:** `npm run typecheck` exits 0.

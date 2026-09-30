@@ -35,8 +35,12 @@ py && (pyMajor > 3 || (pyMajor === 3 && pyMinor >= 10))
 console.log("Supabase (the database)");
 // The token comes from the environment, or from the git-ignored .env.setup.local at the repo root.
 const setupFile = new URL("../.env.setup.local", import.meta.url);
+// The last non-empty SUPABASE_ACCESS_TOKEN= line wins (the template ships an empty one).
 const fromFile = existsSync(setupFile)
-  ? (readFileSync(setupFile, "utf8").match(/^SUPABASE_ACCESS_TOKEN=(.*)$/m)?.[1] ?? "").replace(/\s+#.*$/, "").trim()
+  ? ([...readFileSync(setupFile, "utf8").matchAll(/^SUPABASE_ACCESS_TOKEN=(.*)$/gm)]
+      .map((m) => m[1].replace(/\s+#.*$/, "").trim())
+      .filter(Boolean)
+      .pop() ?? "")
   : "";
 const token = process.env.SUPABASE_ACCESS_TOKEN || fromFile;
 if (!token) {
@@ -69,8 +73,10 @@ if (!token) {
     } else if (freeActive.length >= 2) {
       fix(`both free project slots are in use (${freeActive.length}/2). Projects using them:`);
       for (const p of freeActive) console.log(`          - "${p.name}" (${p.ref}), created ${String(p.created_at).slice(0, 10)}`);
-      console.log("        Pausing one takes whatever app uses it offline until it is restored. Ask the human which");
-      console.log("        one (if any) they can pause or delete in the Supabase dashboard, or to upgrade. Never do it for them.");
+      console.log("        Pausing one takes whatever app uses it offline until it is restored, so ask the human what");
+      console.log("        each one runs. Their options: pause or delete one they don't need right now, upgrade, or");
+      console.log("        create a new free Supabase account and give a token from that (their CRM login email must");
+      console.log("        then be that account's email). Never pause, delete or upgrade anything for them.");
     } else {
       ok(`free project slot available (${freeActive.length}/2 used) — use --org-id ${[...freeIds][0]} in step 2`);
     }
@@ -83,5 +89,5 @@ console.log("Vercel (the hosting)");
 const who = run("npx --yes vercel whoami");
 who ? ok(`logged in as ${who.split("\n").pop()}`) : note("not logged in yet — run `npx vercel login` in app/ (the human finishes it in the browser)");
 
-console.log(failed ? "\nNot ready: fix the lines marked FIX, then run this again." : "\nReady: continue with SETUP.md step 1.");
+console.log(failed ? "\nNot ready: fix the lines marked FIX, then run this again." : "\nReady: continue with SETUP.md step 2 (once step 1's install check has passed).");
 process.exit(failed ? 1 : 0);
